@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:strykepay/models/user.dart';
 import 'package:strykepay/shared/colors.dart';
 import 'package:strykepay/shared/compnents.dart';
-import 'package:strykepay/qr_code_generator/qr_code_generator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../shared/constants.dart';
 import 'cubit/signup_cubit.dart';
@@ -37,7 +37,10 @@ class SignUpScreen extends StatelessWidget {
           if (state is SignUpSuccessState) {
             // close the progress dialog in the last state
             Navigator.pop(context);
-            navigateTo(context, QrCodeGenerator());
+
+            launchURL(url: SignUpCubit.get(context).redirectLik);
+            // navigateTo(context, QrCodeGenerator());
+            print('===================${SignUpCubit.get(context).redirectLik}');
           }
 
           if (state is SignUpErrorState) {
@@ -45,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
             Navigator.pop(context);
             showAlertDialog(
               context: context,
-              text: "This account is already exist",
+              text: "Try Again",
               error: true,
             );
           }
@@ -62,9 +65,6 @@ class SignUpScreen extends StatelessWidget {
                     key: _formKey,
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: signUpScreenHeight * 0.04,
-                        ),
                         buildTextFormField(
                           title: kTextFormFirstName,
                           controller: firstNameController,
@@ -147,36 +147,6 @@ class SignUpScreen extends StatelessWidget {
                           },
                           title: kSignUp,
                         ),
-                        SizedBox(
-                          height: signUpScreenHeight * 0.05,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Flexible(
-                              child: Text(
-                                kAndroidApp,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                    TextStyle(color: kGreyColor, fontSize: 16),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                navigateTo(context, QrCodeGenerator());
-                              },
-                              child: Text(
-                                kGOToQrCode,
-                                style: TextStyle(
-                                    fontSize: 16, color: kSloganColor),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: signUpScreenHeight * 0.05,
-                        ),
                       ],
                     ),
                   ),
@@ -211,4 +181,11 @@ void _checkValidationAndSignUP({
       userAddress: address,
     ),
   );
+}
+Future<bool> launchURL({@required String url}) async {
+  if (await canLaunch(url)) {
+    return await launch(url);
+  } else {
+    return false;
+  }
 }

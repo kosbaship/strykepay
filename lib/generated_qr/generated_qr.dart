@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:strykepay/shared/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class QrCodeGenerator extends StatelessWidget {
+class GeneratedQrCodePage extends StatefulWidget {
+  @override
+  _GeneratedQrCodePageState createState() => _GeneratedQrCodePageState();
+}
+
+class _GeneratedQrCodePageState extends State<GeneratedQrCodePage> {
+
+
+  // @override
+  // void initState() {
+  //   launchURL(url: SignUpCubit.get(context).redirectLik);
+  //
+  //
+  //   super.initState();
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Use your IPhone',
+          'Android App',
           style: TextStyle(color: kSloganColor, fontSize: 18),
         ),
       ),
@@ -19,15 +36,15 @@ class QrCodeGenerator extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Scan Me',
-              style: TextStyle(color: kSloganColor, fontSize: 32),
+              'An Image of me\nsend you via Mail',
+              style: TextStyle(color: kSloganColor, fontSize: 22),
             ),
             const SizedBox(
               height: 20,
               width: double.infinity,
             ),
             QrImage(
-              data: "https://apps.apple.com/us/app/facebook/id284882215",
+              data: "SignUpScreen()",
               version: QrVersions.auto,
               size: 200.0,
             ),
@@ -36,4 +53,15 @@ class QrCodeGenerator extends StatelessWidget {
       ),
     );
   }
+
+
 }
+
+Future<bool> launchURL({@required String url}) async {
+  if (await canLaunch(url)) {
+    return await launch(url);
+  } else {
+    return false;
+  }
+}
+

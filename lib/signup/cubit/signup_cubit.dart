@@ -11,9 +11,13 @@ class SignUpCubit extends Cubit<SignUpStates> {
 
   static SignUpCubit get(context) => BlocProvider.of(context);
 
+  String redirectLik = '';
+
   signUp({@required User user}) {
     //change the state
     emit(SignUpLoadingState());
+
+
 
 
     APIProvider.fetchData(
@@ -28,9 +32,10 @@ class SignUpCubit extends Cubit<SignUpStates> {
           'address': user.userAddress,
         }
     ).then((response) async{
+      redirectLik = response.data['redirect'];
 
       print('\n=========================================================');
-      print(response.data);
+      print(response.data['redirect']);
       print('=========================================================\n\n');
       emit(SignUpSuccessState());
     }).catchError((e) {

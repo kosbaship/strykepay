@@ -9,6 +9,9 @@ class APIProvider{
   static Dio dio = Dio(
     BaseOptions(
       baseUrl: kBASE_URL,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     ),
 
   );

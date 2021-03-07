@@ -17,6 +17,13 @@ const kRedFavColor = Color(0xFFFF6464);
 const kProductColorLocal = Color(0xFF3D82AE);
 const kItemBackGroundColor = Color(0xff46494a);
 
+const kButtonBGColor = Color(0xFF5bcc8c);
+const kButtonSplashColor = Colors.yellow;
+const kButtonTextColor = Colors.white;
+const kButtonIconColor = Colors.amberAccent;
+
+
+
 const MaterialColor kMaterialColor = MaterialColor(
   0xFF5bcc8c,
   <int, Color>{
